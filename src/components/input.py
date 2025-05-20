@@ -3,6 +3,7 @@ import streamlit as st
 def search_box():
     col1, col2, col3 = st.columns([1, 1, 3])
 
+    st.header("MALEE : บริษัท มาลีกรุ๊ป จำกัด (มหาชน)")
     with col1:
         types = st.selectbox(
             "Contact Method:",
