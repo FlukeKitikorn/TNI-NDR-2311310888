@@ -1,6 +1,8 @@
 import streamlit as st
 from src.components.header import show_header  
 from src.components.input import  search_box
+from src.components.content import candle_chart
+
 
 def main():
     st.sidebar.title("เมนูหลัก")
@@ -13,5 +15,7 @@ def main():
 
 if __name__ == "__main__":
     show_header()
+    st.divider()
     search_box()
+    candle_chart()
     # main()
