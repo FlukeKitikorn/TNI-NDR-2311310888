@@ -7,4 +7,4 @@ numpy
 matplotlib
 openpyxl
 settrade-v2
-bokeh
+plotly
