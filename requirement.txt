@@ -6,4 +6,5 @@ scikit-learn
 numpy
 matplotlib
 openpyxl
-settrade-v2 
+settrade-v2
+bokeh
