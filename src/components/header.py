@@ -1,7 +1,6 @@
 import streamlit as st
 
 def show_header():
-    st.set_page_config(page_title='SWAST - Handover Delays',  layout='wide', page_icon=':ambulance:')
 
     #  ------Header------
     col1, col2, col3 = st.columns([1, 2, 1], vertical_alignment="center")

@@ -13,7 +13,20 @@ def main():
     else:
         st.write("นี่คือหน้าอื่น")
 
+def color_bg():
+    page_bg_color = '''
+    <style>
+        [data-testid="stAppViewContainer"]{
+            background-image: linear-gradient(60deg, #abecd6 0%, #fbed96 100%);
+        }
+    </style>
+    '''
+    return page_bg_color
+
 if __name__ == "__main__":
+
+    st.set_page_config(page_title='SWAST - Handover Delays',  layout='wide')
+    st.markdown(color_bg(), unsafe_allow_html=True)
     show_header()
     st.divider()
     search_box()
