@@ -1,6 +1,6 @@
 from settrade_v2 import Investor
 from settrade_v2.errors import SettradeError
-from config import API_ID, API_KEY
+from config import API_ID, API_KEY, ACC_NO, BORKER_ID, APP_CODE
 
 # ===== connect part =====
 def get_connect():
@@ -8,11 +8,11 @@ def get_connect():
         investor = Investor(
             app_id=API_ID,
             app_secret=API_KEY,
-            broker_id="SANDBOX",
-            app_code="SANDBOX",
+            broker_id=BORKER_ID,
+            app_code=APP_CODE,
             is_auto_queue=False
         )
-        return investor.Equity(account_no="kiti-E")
+        return investor.Equity(account_no=ACC_NO)
     except SettradeError as e:
         print("---- error message ----")
         print(e)
@@ -25,8 +25,8 @@ def get_market():
         investor = Investor(
             app_id=API_ID,
             app_secret=API_KEY,
-            broker_id="SANDBOX",
-            app_code="SANDBOX",
+            broker_id=BORKER_ID,
+            app_code=APP_CODE,
             is_auto_queue=False
         )
         return investor.MarketData()
@@ -37,7 +37,7 @@ def get_market():
 # ===== End  fetch market data =====
 
 # ===== fetch candlestick data =====
-def get_candlestick(symbol, interval="1d", limit=30, start=None, end=None, normalized=False):
+def get_candlestick(symbol, interval="1d", limit=30, start=None, end=None, normalized=True):
     market = get_market()
     if not market:
         return None
@@ -56,12 +56,3 @@ def get_candlestick(symbol, interval="1d", limit=30, start=None, end=None, norma
         print(f"Can't fetch data of {symbol} [{e}]")
         return None
 # ===== End fetch candlestick data =====    
-
-# ===== example usage =====
-if __name__ == "__main__":
-    import json
-    result = get_candlestick("PTT", interval="1d", limit=5)
-    if result:
-        print(json.dumps(result, indent=4))
-    else:
-        print("No data returned.")
