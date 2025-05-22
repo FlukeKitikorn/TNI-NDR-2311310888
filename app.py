@@ -4,6 +4,7 @@ from src.components.header import show_header
 from src.components.input import  search_box
 from src.components.content import candle_chart
 from Datahandle.settrade.data import get_candlestick
+from src.components.chart import chart
 from Datahandle.settrade.config import API_ID, API_KEY, ACC_NO, BORKER_ID, APP_CODE
 
 # def main():
@@ -25,8 +26,10 @@ def color_bg():
     '''
     return page_bg_color
 
-def show_data_from_api(symbol, period):
-    result = get_candlestick(symbol, interval=period, limit=5)
+
+#  -------- dump to check ----------
+def show_data_from_api(symbol, period, limit):
+    result = get_candlestick(symbol, interval=period, limit=limit)
     if result:
         print(json.dumps(result, indent=4))
     else:
@@ -38,7 +41,7 @@ if __name__ == "__main__":
     st.markdown(color_bg(), unsafe_allow_html=True)
     show_header()
     st.divider()
-    symbol, indicators, period = search_box()
-    candle_chart()
-    show_data_from_api(symbol, period)
+    symbol, indicators, limit, period = search_box()
+    candle_chart(symbol, period, limit)
+    # show_data_from_api(symbol, period, limit)
     # main()
