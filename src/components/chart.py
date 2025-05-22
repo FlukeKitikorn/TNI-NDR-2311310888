@@ -3,6 +3,7 @@ import streamlit as st
 import numpy as np
 from datetime import datetime, timedelta
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 
 def time_xaxis(period):
@@ -19,13 +20,8 @@ def time_xaxis(period):
     return tickformat
 
 def chart(data):
-    # Mock data สำหรับหุ้น
-    np.random.seed(42)
-    dates = pd.date_range(end=datetime.today(), periods=100)
-    
-    # --------- Hold display ---------
     if data is None or "time" not in data:
-        return 0
+        return
 
     df = pd.DataFrame({
         "date": pd.to_datetime(data["time"], unit='s'),
@@ -36,34 +32,44 @@ def chart(data):
         "volume": data["volume"],
     })
 
-    # สร้างกราฟ Candlestick ด้วย Plotly
-    fig = go.Figure(data=[go.Candlestick(
+    # subplot: 2 rows (candlestick + volume), shared x-axis
+    fig = make_subplots(rows=2, cols=1, shared_xaxes=True,
+                        vertical_spacing=0.05,
+                        row_heights=[0.7, 0.3],
+                        subplot_titles=("Candlestick", "Volume"))
+
+    # Candlestick chart
+    fig.add_trace(go.Candlestick(
         x=df['date'],
         open=df['open'],
         high=df['high'],
         low=df['low'],
         close=df['close'],
         increasing_line_color='green',
-        decreasing_line_color='red'
-    )])
+        decreasing_line_color='red',
+        name="Price"
+    ), row=1, col=1)
 
-    # ---------- change by date ----------
-    timeformat = time_xaxis(data["time"])
+    # Volume chart (bar)
+    fig.add_trace(go.Bar(
+        x=df['date'],
+        y=df['volume'],
+        marker_color='lightblue',
+        name="Volume"
+    ), row=2, col=1)
+
+    tickformat = time_xaxis(data.get("period", "1d"))
 
     fig.update_layout(
-        title="",
-        xaxis_title="Date",
-        yaxis_title="Price",
-        xaxis_rangeslider_visible=False,
-        xaxis=dict(
-            rangeslider_visible=False,
-            automargin=True
-        ),
+        xaxis=dict(tickformat=tickformat,
+                    rangeslider=dict(visible=False),  # ✅ ปิด rangeslider
+                    automargin=True),
+        xaxis2=dict(tickformat=tickformat,
+                    automargin=True),
+        height=500,
         template="plotly_white",
-        height=500
+        showlegend=False,
+        margin=dict(t=30, b=30, l=50, r=30)
     )
 
-    # แสดงผลใน Streamlit
-    # st.set_page_config(layout="wide")
-    # st.title("📊 Candlestick Chart without Bokeh")
     st.plotly_chart(fig, use_container_width=True)
