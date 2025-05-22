@@ -31,6 +31,12 @@ def search_box():
             '1M': "1M",
             '6M': "6M",
         }
+        # options_period = {
+        #     0: ("60m", 60),  # 1H
+        #     1: ("1d", 30),   # 1D (30 วัน)
+        #     2: ("1d", 30),   # 1M (ใช้ daily แล้ว group เป็นเดือน)
+        #     3: ("1d", 180),  # 6M (180 วัน)
+        # }
         selection = st.segmented_control(
                     "Tool",
                     options=options_period.keys(),
@@ -38,6 +44,16 @@ def search_box():
                     selection_mode="single",
                     key="period_select"
                 )
+        if selection == '60m':
+            limit_bar = 48  # 2 วันชั่วโมงละแท่ง
+        elif selection == '1d':
+            limit_bar = 30  # 30 วัน
+        elif selection == '1M':
+            limit_bar = 90  # 3 เดือน สำหรับกลุ่มเป็นรายเดือน
+        elif selection == '6M':
+            limit_bar = 180  # 6 เดือน
+        else:
+            limit_bar = 30  # default
     
     with col4:
         st.write("") 
@@ -46,8 +62,9 @@ def search_box():
     print(json.dumps({
             "choice": choice,
             "indicator": indicator,
-            "period": selection
+            "period": selection,
+            "limit": limit_bar
         }, ensure_ascii=False, indent=2))
     '''
 
-    return choice ,indicator, selection if selection is not None else None
+    return choice ,indicator, limit_bar, selection if selection is not None else None
