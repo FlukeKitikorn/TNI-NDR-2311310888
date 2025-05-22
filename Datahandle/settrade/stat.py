@@ -1,5 +1,4 @@
 import pandas as pd
-from datetime import datetime
 
 def summarize_stock_data(data):
     if data is None:
