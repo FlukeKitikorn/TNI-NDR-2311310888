@@ -106,7 +106,7 @@ def chart(data, indicator=None):
                     automargin=True),
         xaxis2=dict(tickformat=tickformat,
                     automargin=True),
-        height=500,
+        height=550,
         template="plotly_white",
         showlegend=False,
         margin=dict(t=30, b=30, l=50, r=30)
