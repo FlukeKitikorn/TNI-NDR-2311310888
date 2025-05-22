@@ -24,23 +24,6 @@ def candle_chart(symbol, period, limit, indicators):
         chart(result, indicators)
         
     with col2:
-        # st.write(data)  
-        # st.write(data)
-        
-        # st.markdown("### ℹ️ Stock Info")
-        # st.markdown(f"""
-        # **🔹 Symbol**: `{symbol}`  
-        # **🔹 Interval**: `{period}`  
-        # **🔹 Date Range**: `{start}` ➝ `{end}`  
-        # **🔹 Bars Fetched**: `{len(limit)}`  
-        # """)
-
-        # st.divider()
-
-        # st.metric("✅ Average Close", f"{avg_close:.2f}")
-        # st.metric("📈 Highest High", f"{max_price:.2f}", help=f"on {max_time}")
-        # st.metric("📉 Lowest Low", f"{min_price:.2f}", help=f"on {min_time}")
-        # st.metric("📦 Total Volume", f"{total_volume:,.0f}")
         if change is not None and percent_change is not None:
             st.metric(label="Change", value=f"{change:+.2f} ({percent_change:+.2f}%)", delta=percent_change)
         else:
