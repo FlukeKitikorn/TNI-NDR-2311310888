@@ -37,7 +37,7 @@ def get_market():
 # ===== End  fetch market data =====
 
 # ===== fetch candlestick data =====
-def get_candlestick(symbol, interval="1d", limit=30, start=None, end=None, normalized=True):
+def get_candlestick(symbol, interval, limit, start=None, end=None, normalized=True):
     market = get_market()
     if not market:
         return None
