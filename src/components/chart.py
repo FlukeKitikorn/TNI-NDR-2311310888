@@ -4,17 +4,36 @@ import numpy as np
 from datetime import datetime, timedelta
 import plotly.graph_objects as go
 
-def chart():
+
+def time_xaxis(period):
+    if period == "1m":
+        tickformat = "%d %b %H:%M"   # วันที่ เดือน ชั่วโมง:นาที
+    elif period == "1h":
+        tickformat = "%d %b %H:%M"   # วันที่ เดือน ชั่วโมง:นาที
+    elif period == "1d":
+        tickformat = "%d %b"         # วันที่ เดือน
+    elif period == "1M":
+        tickformat = "%b %Y"         # เดือน ปี
+    else:
+        tickformat = "%d %b"         # fallback/default
+    return tickformat
+
+def chart(data):
     # Mock data สำหรับหุ้น
     np.random.seed(42)
     dates = pd.date_range(end=datetime.today(), periods=100)
+    
+    # --------- Hold display ---------
+    if data is None or "time" not in data:
+        return 0
 
     df = pd.DataFrame({
-        "date": dates,
-        "open": np.random.uniform(100, 110, len(dates)),
-        "high": np.random.uniform(110, 115, len(dates)),
-        "low": np.random.uniform(95, 100, len(dates)),
-        "close": np.random.uniform(100, 110, len(dates)),
+        "date": pd.to_datetime(data["time"], unit='s'),
+        "open": data["open"],
+        "high": data["high"],
+        "low": data["low"],
+        "close": data["close"],
+        "volume": data["volume"],
     })
 
     # สร้างกราฟ Candlestick ด้วย Plotly
@@ -28,13 +47,20 @@ def chart():
         decreasing_line_color='red'
     )])
 
+    # ---------- change by date ----------
+    timeformat = time_xaxis(data["time"])
+
     fig.update_layout(
-        title="📈 MSFT Candlestick Chart (Plotly)",
+        title="",
         xaxis_title="Date",
         yaxis_title="Price",
         xaxis_rangeslider_visible=False,
+        xaxis=dict(
+            rangeslider_visible=False,
+            automargin=True
+        ),
         template="plotly_white",
-        height=600
+        height=500
     )
 
     # แสดงผลใน Streamlit
