@@ -4,7 +4,7 @@ import json
 import uuid
 
 def search_box():
-    col1, col2, col3, col4 = st.columns([1, 1, 1, 2])
+    col1, col2, col3, col4 = st.columns([1, 1, 1.5, 2])
     stock_list = load_stock_list()
 
     with col1:   
@@ -26,17 +26,11 @@ def search_box():
 
     with col3:
         options_period = {
-            '60m': "1H",
-            '1d': "1D",
-            '1M': "1M",
-            '6M': "6M",
+            '5m': "1 Min",
+            '60m': "1 Hour",
+            '1d': "1 Day",
+            '1M': "1 Month",
         }
-        # options_period = {
-        #     0: ("60m", 60),  # 1H
-        #     1: ("1d", 30),   # 1D (30 วัน)
-        #     2: ("1d", 30),   # 1M (ใช้ daily แล้ว group เป็นเดือน)
-        #     3: ("1d", 180),  # 6M (180 วัน)
-        # }
         selection = st.segmented_control(
                     "Tool",
                     options=options_period.keys(),
@@ -44,16 +38,14 @@ def search_box():
                     selection_mode="single",
                     key="period_select"
                 )
-        if selection == '60m':
-            limit_bar = 48  # 2 วันชั่วโมงละแท่ง
+        if selection == '5m':
+            limit_bar = 288  # 24 ชม. (12 แท่ง/ชม. × 24 ชม.) = 1 วัน
+        elif selection == '60m':
+            limit_bar = 168  # 1 สัปดาห์ (24 ชม. × 7 วัน)
         elif selection == '1d':
-            limit_bar = 30  # 30 วัน
+            limit_bar = 60  # 3 เดือน (20 วันทำการ/เดือน × 3)
         elif selection == '1M':
-            limit_bar = 90  # 3 เดือน สำหรับกลุ่มเป็นรายเดือน
-        elif selection == '6M':
-            limit_bar = 180  # 6 เดือน
-        else:
-            limit_bar = 30  # default
+            limit_bar = 24  # 2 ปี (24 เดือน)
     
     with col4:
         st.write("") 
