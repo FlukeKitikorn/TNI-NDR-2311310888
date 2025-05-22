@@ -38,6 +38,7 @@ def search_box():
                     selection_mode="single",
                     key="period_select"
                 )
+        limit_bar = 30 # default
         if selection == '5m':
             limit_bar = 288  # 24 ชม. (12 แท่ง/ชม. × 24 ชม.) = 1 วัน
         elif selection == '60m':
