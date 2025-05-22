@@ -4,6 +4,7 @@ import numpy as np
 from datetime import datetime, timedelta
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+from src.controller.indicators import add_indicator
 
 
 def time_xaxis(period):
@@ -19,7 +20,7 @@ def time_xaxis(period):
         tickformat = "%d %b"         # fallback/default
     return tickformat
 
-def chart(data):
+def chart(data, indicator=None):
     if data is None or "time" not in data:
         return
 
@@ -60,7 +61,44 @@ def chart(data):
         name="Volume"
     ), row=2, col=1)
 
-    tickformat = time_xaxis(data.get("period", "1d"))
+    indicator_colors = {
+        "SMA5": "royalblue",
+        "SMA10": "darkorange",
+        "EMA": "mediumvioletred",
+        "MACD": "seagreen"
+    }
+
+    legend_texts = []
+    for tool in indicator:
+        color = indicator_colors.get(tool.upper(), "black")
+        add_indicator(fig, df, tool, color=color)
+        if tool == "EMA":
+            legend_texts.append(f'<span style="color: red">EMA12</span>')
+            legend_texts.append(f'<span style="color: blue">EMA26</span>')
+        else:
+            legend_texts.append(f'<span style="color:{color}">{tool}</span>')
+
+    # สร้าง annotation แสดง legend บอกชื่อและสี
+    fig.add_annotation(
+        xref="paper", yref="paper",
+        x=0.99, y=0.94,  
+        showarrow=False,
+        align="left",
+        bgcolor="rgba(255,255,255,0.9)",  # เพิ่มความทึบให้มองเห็นชัด
+        bordercolor="black",
+        borderwidth=1,
+        borderpad=6,  #ขยาย padding ให้กล่องใหญ่ขึ้น
+        text="Indicators:<br>" + "<br>".join(legend_texts),
+        font=dict(size=13)  
+    )
+
+
+    for tool in indicator:
+        add_indicator(fig, df, tool)
+
+
+    # 1d for default
+    tickformat = time_xaxis(data.get("period", "1d")) 
 
     fig.update_layout(
         xaxis=dict(tickformat=tickformat,
