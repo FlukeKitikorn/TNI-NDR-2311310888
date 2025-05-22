@@ -1,16 +1,18 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 import numpy as np
+import json
+from src.components.chart import chart
+from Datahandle.settrade.data import get_candlestick
 
-
-def candle_chart():
+def candle_chart(symbol, period, limit):
     col1, col2 = st.columns([2.5,1])
     data = np.random.randn(10, 1)
+    result = get_candlestick(symbol, interval=period, limit=limit)
+    # print(json.dumps(result, indent=4))
 
     with col1:
-        arr = np.random.normal(1, 1, size=50)
-        fig, ax = plt.subplots()
-        ax.hist(arr, bins=20)
-        st.pyplot(fig)
+        chart(result)
+
     with col2:
         st.write(data)  
