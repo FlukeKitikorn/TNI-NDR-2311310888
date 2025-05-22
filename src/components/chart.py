@@ -31,6 +31,8 @@ def chart(data):
         "close": data["close"],
         "volume": data["volume"],
     })
+    # เพิ่มคอลัมน์ color สำหรับ volume bar
+    df['color'] = np.where(df['close'] >= df['open'], 'green', 'red')
 
     # subplot: 2 rows (candlestick + volume), shared x-axis
     fig = make_subplots(rows=2, cols=1, shared_xaxes=True,
@@ -54,7 +56,7 @@ def chart(data):
     fig.add_trace(go.Bar(
         x=df['date'],
         y=df['volume'],
-        marker_color='lightblue',
+        marker_color=df['color'],
         name="Volume"
     ), row=2, col=1)
 
