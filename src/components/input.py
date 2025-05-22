@@ -4,7 +4,7 @@ import json
 import uuid
 
 def search_box():
-    col1, col2, col3, col4 = st.columns([1, 1, 1.5, 2])
+    col1, col2, col3, col4 = st.columns([1, 1, 2, 1.5])
     stock_list = load_stock_list()
 
     with col1:   
