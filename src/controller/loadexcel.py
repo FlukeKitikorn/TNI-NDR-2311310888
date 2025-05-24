@@ -56,12 +56,37 @@ def excel_to_pandas(file):
 
         if df.empty:
             st.error("❌ DataFrame is empty!")
-        else:
-            st.success("✅ DataFrame loaded successfully!")
-            st.dataframe(df.head(10))
-
         return df
+    except Exception as e:
+        # st.error(f"❌ Error processing Excel file: {e}")
+        return None
+    
+def table(file):
+    try:
+        df = pd.read_excel(file, skiprows=1)
+        num_rows, num_cols = df.shape
+
+        df.columns = [
+            "วันที่", "ราคาเปิด", "ราคาสูงสุด", "ราคาต่ำสุด", "ราคาเฉลี่ย", "ราคาปิด",
+            "เปลี่ยนแปลง", "เปลี่ยนแปลง(%)", "ปริมาณ(พันหุ้น)", "มูลค่า(ล้านบาท)",
+            "SET Index", "SET เปลี่ยนแปลง(%)"
+        ]
+
+        # ลบแถวว่างและแถว header ซ้ำ
+        df = df[~df["วันที่"].isna() & ~df["วันที่"].astype(str).str.contains("วันที่")]
+
+        # แปลงวันที่ไทยเป็น ค.ศ. และรูปแบบ yyyy-mm-dd
+        df["วันที่"] = df["วันที่"].apply(format_date_thai)
+
+        # แปลงเป็น datetime สำหรับการวิเคราะห์ต่อ
+        df["วันที่"] = pd.to_datetime(df["วันที่"], errors='coerce')
+
+        if df.empty:
+            st.error("❌ DataFrame is empty!")
+        else:
+            st.dataframe(df) 
+            st.info(f"📦 DataFrame นี้มีทั้งหมด {num_rows:,} แถว และ {num_cols:,} คอลัมน์")
 
     except Exception as e:
-        st.error(f"❌ Error processing Excel file: {e}")
+        # st.error(f"❌ Error processing Excel file: {e}")
         return None
