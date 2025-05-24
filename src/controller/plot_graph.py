@@ -5,7 +5,7 @@ import matplotlib
 
 matplotlib.rcParams['font.family'] = 'DejaVu Sans'
 
-def plot_price_trend(df, title="MALEE Closing Price Trend"):
+def plot_price_trend(df, title="Closing Price Trend"):
     """
     ฟังก์ชันนี้รับ DataFrame ที่มีคอลัมน์ 'วันที่' และ 'ราคาปิด'
     แล้วพล็อตกราฟราคาปิดพร้อมแนวโน้ม Linear Regression
@@ -27,7 +27,7 @@ def plot_price_trend(df, title="MALEE Closing Price Trend"):
     ax.set_ylabel("Closing Price (Baht)")
     ax.legend()
     ax.grid(True)
-    plt.title("MALEE Closing Price Trend")
+    plt.title("Closing Price Trend")
     plt.tight_layout()
 
     return fig
