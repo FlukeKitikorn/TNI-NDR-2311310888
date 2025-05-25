@@ -6,7 +6,7 @@ from src.controller.plot_graph import plot_price_trend
 from src.controller.loadexcel import table
  
 st.markdown(
-    "<h1 style='text-align: center; color: white;'>Import stock</h1>",
+    "<h1 style='text-align: center; color: black;'>Import stock</h1>",
     unsafe_allow_html=True
 )
 st.markdown(color_bg(), unsafe_allow_html=True)

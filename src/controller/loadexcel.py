@@ -85,8 +85,7 @@ def table(file):
             st.error("❌ DataFrame is empty!")
         else:
             st.dataframe(df) 
-            st.info(f"📦 DataFrame นี้มีทั้งหมด {num_rows:,} แถว และ {num_cols:,} คอลัมน์")
+            st.info(f"This DataFrame contains {num_rows:,} rows and {num_cols:,} columns.")
 
     except Exception as e:
-        # st.error(f"❌ Error processing Excel file: {e}")
         return None

@@ -6,7 +6,6 @@ from src.components.content import candle_chart
 from Datahandle.settrade.data import get_candlestick
 from src.components.chart import chart
 from PIL import Image
-# from Datahandle.settrade.config import API_ID, API_KEY, ACC_NO, BORKER_ID, APP_CODE
 
 # Define load_image function
 def load_image(path):
@@ -31,14 +30,9 @@ def color_bg():
     return page_bg_color
 
 if __name__ == "__main__":
-    # logo = load_image("./src/img/Leaf-Trade.png")
     st.set_page_config(page_title='Leaf Trade',  layout='wide')
-    # st.sidebar.image(logo, use_column_width=True)
     show_header()
     st.markdown(color_bg(), unsafe_allow_html=True)
     st.divider()
     symbol, indicators, limit, period = search_box()
     candle_chart(symbol, period, limit, indicators)
-    
-    # show_data_from_api(symbol, period, limit)
-    # main()
