@@ -37,7 +37,8 @@ if __name__ == "__main__":
     show_header()
     st.markdown(color_bg(), unsafe_allow_html=True)
     st.divider()
-            
+    symbol, indicators, limit, period = search_box()
+    candle_chart(symbol, period, limit, indicators)
     
     # show_data_from_api(symbol, period, limit)
     # main()
