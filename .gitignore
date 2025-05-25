@@ -1,5 +1,6 @@
 config.py
 __pycache__
 src/components
+src/test
 src/controller
 test/*
