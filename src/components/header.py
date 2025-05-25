@@ -9,6 +9,6 @@ def show_header():
         st.image('./src/img/Leaf-Trade.png', width=250)
     with col2:
         st.title("Leaf Trade")
-        st.markdown(" **tel:** 01392 451192 **| website:** https://www.swast.nhs.uk **| email:** mailto:data.science@swast.nhs.uk")
+        st.markdown(" **tel:** xxx-xxx-xxxx **| website:** https://github.com/FlukeKitikorn/TNI-NDR-2311310888 **| email:** kh.kitikorn_st@tni.ac.th")
     #  ------End Header------
 
