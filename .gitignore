@@ -1,6 +1,7 @@
 config.py
-__pycache__
-src/components
+__pycache__/
+src/components/__pycache__/
 src/test
-src/controller
+src/controller/__pycache__/
 test/
+src/components/__pycache__/
