@@ -1,6 +1,14 @@
+import streamlit as st
+
 from settrade_v2 import Investor
 from settrade_v2.errors import SettradeError
-from config import API_ID, API_KEY, ACC_NO, BORKER_ID, APP_CODE
+# from config import API_ID, API_KEY, ACC_NO, BORKER_ID, APP_CODE
+
+API_ID = st.secrets["API_ID"]
+API_KEY = st.secrets["API_KEY"]
+ACC_NO = st.secrets["ACC_NO"]
+BORKER_ID = st.secrets["BORKER_ID"]
+APP_CODE = st.secrets["APP_CODE"]
 
 # ===== connect part =====
 def get_connect():
